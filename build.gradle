@@ -15,25 +15,22 @@ java {
 
 repositories {
 	mavenCentral()
-	maven { url 'https://repo.spring.io/milestone' }
-	maven { url 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'    // Core do Spring Boot
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Adiciona Spring Data JPA para persistência
-	implementation 'org.springframework.kafka:spring-kafka'          // Kafka (se necessário)
-	implementation 'org.apache.kafka:kafka-clients'                  // Clientes Kafka
+	implementation 'org.springframework.boot:spring-boot-starter'        // Core do Spring Boot
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Spring Data JPA para persistência
+	implementation 'org.springframework.kafka:spring-kafka'              // Kafka (já inclui kafka-clients)
 
-	implementation 'org.springframework.boot:spring-boot-starter-web' // Adiciona Spring Web
-	implementation 'org.projectlombok:lombok'                        // Lombok para Getters e Setters
+	implementation 'org.springframework.boot:spring-boot-starter-web'     // Spring Web
+	implementation 'org.projectlombok:lombok'                            // Lombok para Getters e Setters
 	annotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.kafka:spring-kafka-test' // Testes com Kafka (se necessário)
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	implementation 'io.github.cdimascio:java-dotenv:5.2.2'
-	implementation 'com.oracle.database.jdbc:ojdbc8:21.5.0.0'
+	testImplementation 'org.springframework.kafka:spring-kafka-test'       // Testes com Kafka
+
+	implementation 'io.github.cdimascio:java-dotenv:5.2.2'                // Suporte para .env
+	implementation 'com.oracle.database.jdbc:ojdbc8:21.5.0.0'             // Driver JDBC do Oracle
 }
 
 tasks.named('test') {

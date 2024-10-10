@@ -1,14 +1,18 @@
-# Usar a imagem base do OpenJDK 17
-FROM openjdk:17-jdk-slim
+# Use a imagem do Gradle para construir o projeto
+FROM gradle:7.5.1-jdk17 AS build
+WORKDIR /app
+COPY . .
+RUN gradle clean build -x test
 
-# Definir diretório de trabalho no container
+# Use uma imagem do OpenJDK para rodar a aplicação
+FROM openjdk:17-jdk-slim
 WORKDIR /app
 
-# Copiar o arquivo JAR gerado para o container
-COPY build/libs/*.jar app.jar
+# Copie o arquivo .jar do build anterior
+COPY --from=build /app/build/libs/*.jar consumer.jar
 
-# Expor a porta da aplicação
+# Exponha a porta da aplicação
 EXPOSE 8080
 
-# Comando para iniciar a aplicação
-CMD ["java", "-jar", "app.jar"]
+# Comando de entrada para rodar a aplicação
+ENTRYPOINT ["java", "-jar", "consumer.jar"]

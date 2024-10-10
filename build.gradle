@@ -1,0 +1,40 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.0'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'    // Core do Spring Boot
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Adiciona Spring Data JPA para persistência
+	implementation 'org.springframework.kafka:spring-kafka'          // Kafka (se necessário)
+	implementation 'org.apache.kafka:kafka-clients'                  // Clientes Kafka
+
+	implementation 'org.springframework.boot:spring-boot-starter-web' // Adiciona Spring Web
+	implementation 'org.projectlombok:lombok'                        // Lombok para Getters e Setters
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.kafka:spring-kafka-test' // Testes com Kafka (se necessário)
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation 'io.github.cdimascio:java-dotenv:5.2.2'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
